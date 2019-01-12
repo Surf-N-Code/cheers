@@ -1,0 +1,83 @@
+---
+- hosts: vb
+
+  tasks:
+    - ping: ~
+
+    - name: Update ATP package manager repositories cache
+      become: true
+      apt:
+        update_cache: yes
+
+    - name: Upgrade existing packages
+      become: true
+      apt:
+        upgrade: safe
+
+    - name: Install cowsay - it' probably important
+      apt:
+        name: cowsay
+      become: true
+
+    - name: Install Git
+      become: true
+      apt:
+        name: git
+        state: latest
+
+    - name: Install NGINX
+      become: true
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Install MySQL db server
+      become: true
+      apt:
+        name: mysql-server
+        state: latest
+
+    - name: Add php 7 PPA repo
+      become: true
+      apt_repository:
+        repo: 'ppa:ondrej/php'
+
+    - name: Install PHP CLI
+      become: true
+      apt:
+        name: php7.2-cli
+        state: latest
+
+    - name: Install PHP Packages
+      become: true
+      apt:
+        name:
+          - php7.2-cli
+          - php7.2-curl
+          - php7.2-fpm
+          - php7.2-intl
+          - php7.2-mysql
+        state: latest
+
+    - name: Set date.timezone for CLI
+      become: true
+      lineinfile:
+        path: /etc/php/7.2/cli/php.ini
+        regexp: "date.timezone ="
+        line: "date.timezone = UTC"
+
+    - name: Set date.timezone for FPM
+      become: true
+      lineinfile:
+        path: /etc/php/7.2/fpm/php.ini
+        regexp: "date.timezone ="
+        line: "date.timezone = UTC"
+
+    - name: Create projectg directory and set its permissions
+      become: true
+      file:
+        path: "/var/www/project"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        recurse: yes
