@@ -1,6 +1,12 @@
 ---
 - hosts: vb
 
+  vars:
+    server_name: cheersbrosnan.com
+    symfony_root_dir: /var/www/cheers
+    symfony_web_dir: "{{ symfony_root_dir }}/public"
+    symfony_console_path: "{{ symfony_root_dir}}/bin/console"
+
   tasks:
     - ping: ~
 
@@ -19,6 +25,13 @@
         name: cowsay
       become: true
 
+    - name: Install low-level utilities
+      become: true
+      apt:
+        name:
+          - zip
+          - unzip
+
     - name: Install Git
       become: true
       apt:
@@ -30,6 +43,7 @@
       apt:
         name: nginx
         state: latest
+      notify: Restart Nginx
 
     - name: Install MySQL db server
       become: true
@@ -57,7 +71,11 @@
           - php7.2-fpm
           - php7.2-intl
           - php7.2-mysql
+          - php7.2-xml
+          - php7.2-mbstring
+          - php7.2-zip
         state: latest
+      notify: Restart PHP-FPM
 
     - name: Set date.timezone for CLI
       become: true
@@ -72,12 +90,79 @@
         path: /etc/php/7.2/fpm/php.ini
         regexp: "date.timezone ="
         line: "date.timezone = UTC"
+      notify: Restart PHP-FPM
 
     - name: Create projectg directory and set its permissions
       become: true
       file:
-        path: "/var/www/project"
+        path: "{{ symfony_root_dir }}"
         state: directory
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         recurse: yes
+
+    - name: Ceckout Git repo
+      git:
+        repo: https://github.com/Surf-N-Code/cheers.git
+        dest: "{{ symfony_root_dir }}"
+        force: yes
+
+    - name: Download composer
+      script: scripts/install_composer.sh
+
+    - name: Move composer globally
+      become: true
+      command: "mv composer.phar /usr/local/bin/composer"
+
+    - name: Set permissons on cmposer
+      become: true
+      file:
+        path: /usr/local/bin/composer
+        mode: "a+x"
+
+    - name: Install Composer dependencies
+      composer:
+        working_dir: "{{ symfony_root_dir }}"
+        no_dev: no
+
+    - name: Add Symfony config template to the nginx available sites
+      become: true
+      template:
+        src: templates/symfony.conf
+        dest: "/etc/nginx/sites-available/{{ server_name }}.conf"
+      notify: Restart Nginx
+
+    - name: Enable symfony config template from nginx available sites
+      become: true
+      file:
+        src: "/etc/nginx/sites-available/{{ server_name }}.conf"
+        dest: "/etc/nginx/sites-enabled/{{ server_name }}.conf"
+        state: link
+      notify: Restart Nginx
+
+    - name: Add enabled Nginx site /etc/hosts
+      become: true
+      lineinfile:
+        dest: /etc/hosts
+        regexp: "{{ server_name }}"
+        line: "127.0.0.1 {{ server_name }}"
+
+    # Symfony console commands
+    - name: Create DB if not exists
+      command: '{{ symfony_console_path }} doctrine:database:create --if-not-exists'
+
+    - name: Execute migrations
+      command: '{{ symfony_console_path }} doctrine:migrations:migrate --no-interaction'
+
+  handlers:
+    - name: Restart Nginx
+      become: true
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Restart PHP-FPM
+      become: true
+      service:
+        name: php7.2-fpm
+        state: restarted
