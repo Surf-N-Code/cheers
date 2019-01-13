@@ -1,98 +1,104 @@
 ---
-- hosts: vb
+- hosts: webserver
 
-  vars:
-    server_name: cheersbrosnan.com
-    symfony_root_dir: /var/www/cheers
-    symfony_web_dir: "{{ symfony_root_dir }}/public"
-    symfony_console_path: "{{ symfony_root_dir}}/bin/console"
+  vars_files:
+    - ./vars/vault.yml
+    - ./vars/vars.yml
 
-  tasks:
-    - ping: ~
+  vars_prompt:
+    - name: symfony_env
+      prompt: "Enter the environment for your Symfony app (prod|dev|test)"
+      default: prod
+      private: no
 
-    - name: Update ATP package manager repositories cache
+  environment:
+    SYMFONY_ENV: "{{ symfony_env|lower }}"
+
+  pre_tasks:
+    - name: Convert entered Symfony environment to lowercase
+      set_fact:
+        symfony_env: "{{ symfony_env|lower }}"
+      tags:
+        - always
+
+    - name: Update APT package manager repositories cache
       become: true
       apt:
         update_cache: yes
 
-    - name: Upgrade existing packages
+    - name: Upgrade installed packages
       become: true
       apt:
         upgrade: safe
 
-    - name: Install cowsay - it' probably important
+  roles:
+    - nginx
+#    - role: DavidWittman.redis
+#      become: true
+
+  tasks:
+    - ping: ~
+
+    - name: Install cowsay - it's probably important
+      become: true
       apt:
         name: cowsay
-      become: true
 
     - name: Install low-level utilities
       become: true
       apt:
-        name:
-          - zip
-          - unzip
+        name: "{{ item }}"
+      with_items:
+        - zip
+        - unzip
 
-    - name: Install Git
+    - name: Install Git VCS
       become: true
       apt:
         name: git
         state: latest
 
-    - name: Install NGINX
-      become: true
-      apt:
-        name: nginx
-        state: latest
-      notify: Restart Nginx
-
-    - name: Install MySQL db server
+    - name: Install MySQL DB server
       become: true
       apt:
         name: mysql-server
         state: latest
 
-    - name: Add php 7 PPA repo
+    - name: Add PHP 7 PPA repository
       become: true
       apt_repository:
         repo: 'ppa:ondrej/php'
 
-    - name: Install PHP CLI
+    - name: Install PHP packages
       become: true
       apt:
-        name: php7.2-cli
+        name: "{{ item }}"
         state: latest
-
-    - name: Install PHP Packages
-      become: true
-      apt:
-        name:
-          - php7.2-cli
-          - php7.2-curl
-          - php7.2-fpm
-          - php7.2-intl
-          - php7.2-mysql
-          - php7.2-xml
-          - php7.2-mbstring
-          - php7.2-zip
-        state: latest
+      with_items:
+        - php7.2-cli
+        - php7.2-curl
+        - php7.2-fpm
+        - php7.2-intl
+        - php7.2-mysql
+        - php7.2-xml
       notify: Restart PHP-FPM
 
     - name: Set date.timezone for CLI
       become: true
       lineinfile:
-        path: /etc/php/7.2/cli/php.ini
+        dest: /etc/php/7.2/cli/php.ini
         regexp: "date.timezone ="
         line: "date.timezone = UTC"
 
     - name: Set date.timezone for FPM
       become: true
       lineinfile:
-        path: /etc/php/7.2/fpm/php.ini
+        dest: /etc/php/7.2/fpm/php.ini
         regexp: "date.timezone ="
         line: "date.timezone = UTC"
       notify: Restart PHP-FPM
 
-    - name: Create projectg directory and set its permissions
+    - name: Create project directory and set its permissions
       become: true
       file:
         path: "{{ symfony_root_dir }}"
@@ -100,67 +106,64 @@
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         recurse: yes
+      tags:
+        - deploy
 
-    - name: Ceckout Git repo
+    - name: Checkout Git repository
       git:
-        repo: https://github.com/Surf-N-Code/cheers.git
+        repo: https://github.com/Surf-N-Code/cheers
         dest: "{{ symfony_root_dir }}"
         force: yes
+      register: repo_code
+      tags:
+        - deploy
 
-    - name: Download composer
+    - name: Register code_changed variable
+      set_fact:
+        code_changed: repo_code.changed
+
+    - name: Check for Composer
+      stat:
+        path: /usr/local/bin/composer
+      register: composer_stat
+      tags:
+        - deploy
+
+    - name: Download Composer
       script: scripts/install_composer.sh
+      when: not composer_stat.stat.exists
+      tags:
+        - deploy
 
-    - name: Move composer globally
+    - name: Move Composer globally
       become: true
-      command: "mv composer.phar /usr/local/bin/composer"
+      command: mv composer.phar /usr/local/bin/composer
+      when: not composer_stat.stat.exists
+      tags:
+        - deploy
 
-    - name: Set permissons on cmposer
+    - name: Set permissions on Composer
       become: true
       file:
         path: /usr/local/bin/composer
         mode: "a+x"
+      tags:
+        - deploy
 
-    - name: Install Composer dependencies
+    - name: Make sure composer is at its latest version
       composer:
         working_dir: "{{ symfony_root_dir }}"
-        no_dev: no
+        command: self-update
+      register: composer_self_update
+      changed_when: "not composer_self_update.stdout|search('You are already using composer version')"
+#      when: composer_self_update is search("You are already using composer version")
+      tags:
+        - deploy
 
-    - name: Add Symfony config template to the nginx available sites
-      become: true
-      template:
-        src: templates/symfony.conf
-        dest: "/etc/nginx/sites-available/{{ server_name }}.conf"
-      notify: Restart Nginx
-
-    - name: Enable symfony config template from nginx available sites
-      become: true
-      file:
-        src: "/etc/nginx/sites-available/{{ server_name }}.conf"
-        dest: "/etc/nginx/sites-enabled/{{ server_name }}.conf"
-        state: link
-      notify: Restart Nginx
-
-    - name: Add enabled Nginx site /etc/hosts
-      become: true
-      lineinfile:
-        dest: /etc/hosts
-        regexp: "{{ server_name }}"
-        line: "127.0.0.1 {{ server_name }}"
-
-    # Symfony console commands
-    - name: Create DB if not exists
-      command: '{{ symfony_console_path }} doctrine:database:create --if-not-exists'
-
-    - name: Execute migrations
-      command: '{{ symfony_console_path }} doctrine:migrations:migrate --no-interaction'
+    # Bootstrap Symfony app
+    - include: ./includes/symfony-bootstrap.yml code_changed=code_changed
 
   handlers:
-    - name: Restart Nginx
-      become: true
-      service:
-        name: nginx
-        state: restarted
-
     - name: Restart PHP-FPM
       become: true
       service:

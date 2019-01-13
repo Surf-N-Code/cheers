@@ -11,29 +11,54 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/main", name="main")
+     * @Route("/", name="home")
      */
     public function index(Request $request)
     {
-        $form = $this->createForm(UserType::class);
-        $form->handleRequest($request);
+//        $form = $this->createForm(UserType::class);
+//        $form->handleRequest($request);
+//
+//        if($form->isSubmitted() && $form->isValid()) {
+//            dump("submitted data");
+//            dump($form->getData());
+//            $user = new User();
+//            $user = $form->getData();
+//
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($user);
+//            $em->flush();
+//
+//
+//            $this->addFlash("success", "Hey Bro, welcome!");
+//            return $this->redirectToRoute('main');
+//        }
 
-        if($form->isSubmitted() && $form->isValid()) {
-            dump("submitted data");
-            dump($form->getData());
-            $user = new User();
-            $user = $form->getData();
+        return $this->render('base.html.twig');
+    }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+    /**
+     * @Route("/products", name="products")
+     */
+    public function products(Request $request)
+    {
+//        $form = $this->createForm(UserType::class);
+//        $form->handleRequest($request);
+//
+//        if($form->isSubmitted() && $form->isValid()) {
+//            dump("submitted data");
+//            dump($form->getData());
+//            $user = new User();
+//            $user = $form->getData();
+//
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($user);
+//            $em->flush();
+//
+//
+//            $this->addFlash("success", "Hey Bro, welcome!");
+//            return $this->redirectToRoute('main');
+//        }
 
-
-            $this->addFlash("success", "Hey Bro, welcome!");
-            return $this->redirectToRoute('main');
-        }
-        return $this->render('main/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('products/index.html.twig');
     }
 }
