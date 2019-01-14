@@ -10013,7 +10013,7 @@ html.boxed .slider-container {
 	line-height: 28px;
 	width: 28px;
 	text-align: center;
-	color: #333 !important;
+	color: #fff !important;
 	text-decoration: none;
 	font-size: 12.8px;
 	font-size: 0.8rem;
@@ -10024,11 +10024,11 @@ html.boxed .slider-container {
 	color: #FFF !important;
 }
 
-.social-icons li:hover.social-icons-twitter a {
+.social-icons-twitter a {
 	background: #1aa9e1;
 }
 
-.social-icons li:hover.social-icons-facebook a {
+.social-icons-facebook a {
 	background: #3b5a9a;
 }
 
@@ -10052,7 +10052,7 @@ html.boxed .slider-container {
 	background: #c3191e;
 }
 
-.social-icons li:hover.social-icons-instagram a {
+.social-icons-instagram a {
 	background: #7c4a3a;
 }
 
