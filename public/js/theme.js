@@ -4383,6 +4383,32 @@ window.theme.fn = {
 
 }).apply(this, [window.theme, jQuery]);
 
+// Whatsapp sign-up
+(function(theme, $) {
+
+	$('#whatsappSignUpForm').on('submit', function(e) {
+		e.preventDefault();
+		console.log("logged");
+		console.log("data",$('#whatsappInput').val());
+		$btn = $('#whatsappSignUpBtn');
+		$.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:8002/regWhatsapp',
+			data: {
+				'number': $('#whatsappInput').val()
+			},
+			dataType: 'json',
+			success: function(data) {
+				if (data.response == 'success') {
+					$btn.removeClass('btn btn-primary');
+					$btn.addClass('btn btn-success');
+				} else {
+
+				}
+			}
+		});
+	});
+}).apply(this, [window.theme, jQuery]);
 
 // Newsletter
 (function(theme, $) {

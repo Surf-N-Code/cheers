@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body_content %}
+<div role="main" class="main">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Short Title</th>
+                            <th>Amazon Link</th>
+                            <th>Description</th>
+                            <th>Affiliate Link</th>
+                            <th>Cheers Link</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.shortTitle }}</td>
+                            <td><a href="{{ product.amazonLink }}">{{ product.shortTitle }}</a></td>
+                            <td>{{ product.description }}</td>
+                            <td><a href="{{ product.affiliateLink }}">{{ product.affiliateLink }}</a></td>
+                            <td><a href="{{ product.cheersLink }}">{% if product.cheersLink %}CheersLink{% endif %}</a></td>
+                            <td><img src="{{ product.image }}" style="width: 100px; height: 100px"/></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

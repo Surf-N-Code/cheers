@@ -51,6 +51,7 @@
         <!-- Theme Custom CSS -->
         <link rel="stylesheet" href="{{  asset('css/custom.css') }}">
     {% endblock %}
+
     </head>
     <body>
 
@@ -128,7 +129,9 @@
                     {#</div>#}
                 {#</div>#}
             {#</header>#}
+
         <div class="body">
+            {% block body_content %}
             <header id="header" class="header-transparent header-transparent-dark-bottom-border header-transparent-dark-bottom-border-1 header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 30, 'stickyHeaderContainerHeight': 70}">
                 <div class="header-body border-top-0 bg-dark box-shadow-none">
                     <div class="header-container container">
@@ -136,7 +139,7 @@
                             <div class="header-column">
                                 <div class="header-row">
                                     <div class="header-logo">
-                                        <a href="index.html">
+                                        <a href="{{ path('home') }}">
                                             <img alt="Porto" width="60" height="60" src="{{ asset('images/logo_circle.png') }}">
                                         </a>
                                     </div>
@@ -191,42 +194,47 @@
                                 <h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"
                                     data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
                                     data-x="center"
-                                    data-y="center" data-voffset="['-60','-60','-60','-85']"
+                                    data-y="center" data-voffset="['-60','-60','-60','-65']"
                                     data-fontsize="['50','50','50','90']"
                                     data-lineheight="['55','55','55','95']">CHEERS BROSNAN</h1>
 
                                 <div class="tp-caption font-weight-light text-center"
                                      data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
                                      data-x="center"
-                                     data-y="center" data-voffset="['-10','-10','-10','-25']"
+                                     data-y="center" data-voffset="['-10','-10','10','60']"
                                      data-fontsize="['18','18','18','50']"
                                      data-lineheight="['29','29','29','40']"
-                                     style="color: #b5b5b5;">Dein verrückter Whatsapp Berater - trage dich ein! Ich habe die Top-Shopping Tips für euch Lauchs!!111</div>
+                                     style="color: #b5b5b5;">Dein verrückter Whatsapp Berater - trage dich ein!<p>Ich habe die Top-Shopping Tips für euch Lauchs!!11</div>
 
                                 <input class="tp-caption btn btn-light font-weight-bold text-color-primary"
-                                       id="telInput"
+                                       id="whatsappInput"
                                        data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
                                        data-x="center" data-hoffset="['-120','-120','-120','-195']"
-                                       data-y="center" data-voffset="['65','65','65','210']"
-                                       data-paddingtop="['15','15','15','30']"
-                                       data-paddingbottom="['15','15','15','30']"
-                                       data-paddingleft="['20','33','33','50']"
-                                       data-paddingright="[20','40','40','55']"
+                                       data-y="center" data-voffset="['65','65','80','210']"
+                                       data-paddingtop="['15','15','15','25']"
+                                       data-paddingbottom="['15','15','15','25']"
+                                       data-paddingleft="['20','33','33','40']"
+                                       data-paddingright="[20','20','20','10']"
                                        data-fontsize="['13','13','13','25']"
                                        data-lineheight="['20','20','20','25']"
                                        placeholder="+49 deine whatsapp"/>
 
-                                <a class="tp-caption btn btn-primary font-weight-bold"
+                                <form id="whatsappSignUpForm" action="#" method="POST" class="mw-100">
+                                <button class="tp-caption btn btn-primary font-weight-bold"
+                                   id="whatsappSignUpBtn"
                                    href="#"
                                    data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
                                    data-x="center" data-hoffset="['90','90','90','165']"
-                                   data-y="center" data-voffset="['65','65','65','210']"
+                                   data-y="center" data-voffset="['65','65','80','210']"
                                    data-paddingtop="['15','15','15','30']"
                                    data-paddingbottom="['15','15','15','30']"
                                    data-paddingleft="['33','33','33','50']"
                                    data-paddingright="['33','33','33','50']"
                                    data-fontsize="['13','13','13','25']"
-                                   data-lineheight="['20','20','20','25']">SIGN UP NOW<i class="fas fa-arrow-right ml-1"></i></a>
+                                   data-lineheight="['20','20','20','25']"
+                                    type="submit">SIGN UP NOW<i class="fas fa-arrow-right ml-1"></i></button>
+                                </form>
+
 
                             </li>
 
@@ -446,6 +454,7 @@
                 </div>
             </footer>
         </div>
+        {% endblock %}
         {% block body %}{% endblock %}
         <script src="{{ asset('vendor/modernizr/modernizr.min.js') }}"></script>
         <!-- Vendor -->

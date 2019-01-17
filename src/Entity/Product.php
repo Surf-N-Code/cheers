@@ -17,27 +17,37 @@ class Product
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $shortTitle;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $amazonLink;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $affiliateLink;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $cheersLink;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
@@ -104,5 +114,37 @@ class Product
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShortTitle()
+    {
+        return $this->shortTitle;
+    }
+
+    /**
+     * @param mixed $shortTitle
+     */
+    public function setShortTitle($shortTitle): void
+    {
+        $this->shortTitle = $shortTitle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmazonLink()
+    {
+        return $this->amazonLink;
+    }
+
+    /**
+     * @param mixed $amazonLink
+     */
+    public function setAmazonLink($amazonLink): void
+    {
+        $this->amazonLink = $amazonLink;
     }
 }
