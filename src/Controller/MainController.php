@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Form\AddProductType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\ORMException;
+use Psr\Log\LoggerAwareTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +19,8 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class MainController extends AbstractController
 {
+    use LoggerAwareTrait;
+
     /**
      * @Route("/", name="home")
      */
@@ -33,21 +37,28 @@ class MainController extends AbstractController
     {
         $params = $request->request->all();
         dump($params);
-            $user = new User();
-            $user->setTelephone($params['number']);
-            $user->setEmail('');
-            $user->setName('');
-            $user->setSignupDate(new \DateTime(date('Y-m-d h:i:s'), new \DateTimeZone('Europe/London')));
+        $user = new User();
+        $user->setTelephone($params['number']);
+        $user->setEmail('');
+        $user->setName('');
+        $user->setSignupDate(new \DateTime(date('Y-m-d h:i:s'), new \DateTimeZone('Europe/London')));
+
+        try {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            return new JsonResponse([
+                "status" => "success",
+                "message" => null
+            ]);
 
-
-//            $this->addFlash("success", "Hey Bro, welcome!");
-//            return $this->redirectToRoute('main');
-//        }
-        return new JsonResponse($params);
-//        return $this->render('products/index.html.twig');
+        } catch(ORMException $e) {
+            $this->logger->error("Could not add user with whatsapp:".$user->getTelephone());
+            return new JsonResponse([
+                "status" => "failed",
+                "message" => json_encode($e)
+            ]);
+        }
     }
 
     /**
@@ -95,13 +106,28 @@ class MainController extends AbstractController
      * @Route("/generateHtmlFiles", name="generate_html")
      * @Method("GET")
      */
-    public function generateHtml()
+    public function checkCheersLinks()
     {
-        $product = $this->getDoctrine()->getRepository(Product::class)->find(33);
+        $ret = [];
+        do {
+            $product = $this->getDoctrine()->getRepository(Product::class)->findOneEmptyLink();
+            $this->generateCheersLinks($product);
+            array_push($ret, $product->getShortTitle());
+        } while($product);
 
+        return new Response("Html generated for products: ".json_encode($ret));
+    }
+
+    private function generateCheersLinks($product) {
         if(!$product) {
             return new Response("No more HTML files to generate");
         }
+
+        $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/")+4, strlen($product->getAffiliateLink()));
+        $product->setCheersLink("http://cheersbrosnan.com/p/$name");
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->flush();
 
         $content = $this->renderView('products/template.html.twig', [
             'shortTitle' => $product->getShortTitle(),
@@ -110,8 +136,6 @@ class MainController extends AbstractController
             'imageLink' => $product->getImage()
         ]);
 
-        file_put_contents(__DIR__."/../../public/p/xyz.html", $content);
-
-        return new Response("Html generated for product: ".$product->getShortTitle());
+        file_put_contents(__DIR__."/../../public/p/$name.html", $content);
     }
 }

@@ -1,1 +1,24 @@
 /* Add here all your CSS customizations */
+#signUpBtns {
+    visibility: hidden;
+}
+
+#pageHeader {
+    height: 60vh;
+}
+
+.placeholderClass::-webkit-input-placeholder {
+    color: white;
+}
+
+.placeholderClass:-moz-placeholder {
+    color: white;
+}
+
+.placeholderClass::-moz-placeholder {
+    color: white;
+}
+
+.placeholderClass:-ms-input-placeholder {
+    color: white;
+}

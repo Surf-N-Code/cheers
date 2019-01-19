@@ -4391,17 +4391,22 @@ window.theme.fn = {
 		console.log("logged");
 		console.log("data",$('#whatsappInput').val());
 		$btn = $('#whatsappSignUpBtn');
+		$input = $('#whatsappInput');
 		$.ajax({
 			type: 'POST',
-			url: 'http://127.0.0.1:8002/regWhatsapp',
+			url: '/regWhatsapp',
 			data: {
 				'number': $('#whatsappInput').val()
 			},
 			dataType: 'json',
 			success: function(data) {
-				if (data.response == 'success') {
+				console.log(data.status);
+				if (data.status == "success") {
+					$input.val("");
 					$btn.removeClass('btn btn-primary');
 					$btn.addClass('btn btn-success');
+					$btn.html('<i class="fas fa-check"></i> CHEERS BRO!');
+
 				} else {
 
 				}

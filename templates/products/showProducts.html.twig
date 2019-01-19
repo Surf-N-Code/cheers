@@ -24,7 +24,7 @@
                             <td>{{ product.title }}</td>
                             <td>{{ product.shortTitle }}</td>
                             <td><a href="{{ product.amazonLink }}">{{ product.shortTitle }}</a></td>
-                            <td>{{ product.description }}</td>
+                            <td>{{ product.description|truncate(100, true) }}</td>
                             <td><a href="{{ product.affiliateLink }}">{{ product.affiliateLink }}</a></td>
                             <td><a href="{{ product.cheersLink }}">{% if product.cheersLink %}CheersLink{% endif %}</a></td>
                             <td><img src="{{ product.image }}" style="width: 100px; height: 100px"/></td>
