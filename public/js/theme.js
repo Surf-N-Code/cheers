@@ -4383,38 +4383,6 @@ window.theme.fn = {
 
 }).apply(this, [window.theme, jQuery]);
 
-// Whatsapp sign-up
-(function(theme, $) {
-
-	$('#whatsappSignUpForm').on('submit', function(e) {
-		e.preventDefault();
-		console.log("logged");
-		console.log("data",$('#whatsappInput').val());
-		$btn = $('#whatsappSignUpBtn');
-		$input = $('#whatsappInput');
-		$.ajax({
-			type: 'POST',
-			url: '/regWhatsapp',
-			data: {
-				'number': $('#whatsappInput').val()
-			},
-			dataType: 'json',
-			success: function(data) {
-				console.log(data.status);
-				if (data.status == "success") {
-					$input.val("");
-					$btn.removeClass('btn btn-primary');
-					$btn.addClass('btn btn-success');
-					$btn.html('<i class="fas fa-check"></i> CHEERS BRO!');
-
-				} else {
-
-				}
-			}
-		});
-	});
-}).apply(this, [window.theme, jQuery]);
-
 // Newsletter
 (function(theme, $) {
 

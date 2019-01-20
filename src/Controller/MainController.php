@@ -26,7 +26,24 @@ class MainController extends AbstractController
      */
     public function index(Request $request)
     {
-        return $this->render('base.html.twig');
+        if ($request->isXmlHttpRequest()) {
+            $offset = $request->get('offset');
+            $limit = $request->get('limit');
+
+            $products = $this
+                ->getDoctrine()
+                ->getRepository(Product::class)
+                ->findFirstNProducts(3, 1291);
+        } else {
+            $products = $this
+                ->getDoctrine()
+                ->getRepository(Product::class)
+                ->findFirstNProducts(3, 1);
+        }
+
+        return $this->render('base.html.twig', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -71,7 +88,7 @@ class MainController extends AbstractController
 
         dump($products);
 
-        return $this->render('products/showProducts.html.twig', [
+        return $this->render('products/listProducts.html.twig', [
             'products' => $products
         ]);
     }
@@ -129,7 +146,7 @@ class MainController extends AbstractController
         $em->persist($product);
         $em->flush();
 
-        $content = $this->renderView('products/template.html.twig', [
+        $content = $this->renderView('products/productLinkTemplate.html.twig', [
             'shortTitle' => $product->getShortTitle(),
             'description' => $product->getDescription(),
             'affiliateLink' => $product->getAffiliateLink(),

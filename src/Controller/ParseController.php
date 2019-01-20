@@ -18,11 +18,7 @@ class ParseController extends AbstractController
     public function amazonParse(Parser $parser)
     {
         $status = [];
-        //@TODO parse as long as there is links available
-//        for($i = 0; $i < 1; $i++) {
-            $ret = $parser->getProductInfo();
-            dump($ret);
-//        }
+        array_push($status, $parser->getProductInfo());
         return new JsonResponse($status);
     }
 }

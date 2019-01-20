@@ -41,8 +41,10 @@ class ProductRepository extends ServiceEntityRepository
     public function findOneEmptyImage()
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.image is NULL')
+            ->andWhere('p.image IS NULL')
             ->orWhere('p.image = :image')
+            ->orWhere('p.description = :image')
+            ->orWhere('p.description IS NULL')
             ->setParameter('image', "")
             ->setMaxResults(1)
             ->getQuery()
@@ -50,6 +52,20 @@ class ProductRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function findFirstNProducts($nextN, $idStart)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id > :id')
+            ->orderBy('p.id')
+            ->setParameter(':id', $idStart)
+            ->setMaxResults($nextN)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     /*
     public function findOneBySomeField($value): ?Product
     {

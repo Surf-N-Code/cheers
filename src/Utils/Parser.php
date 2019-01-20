@@ -36,7 +36,8 @@ class Parser {
        $ret = [];
        do {
            $product = $this->em->getRepository(Product::class)->findOneEmptyImage();
-           array_push($ret, $this->parseLink($product->getAmazonLink()));
+           if(!$product) break;
+           array_push($ret, $this->parseLink($product[0]->getAmazonLink()));
            $this->doSleep(1,3);
        } while($product);
        return $ret;
@@ -63,18 +64,21 @@ class Parser {
 
         $description = '';
         $descData = $this->dom->find('#feature-bullets');
+
         if(count($descData) > 0) {
             $lis = $descData->find('.a-list-item');
-
+            dump($lis);
             if(count($lis) > 0) {
                 foreach($lis as $li) {
-                    $description .= str_replace(ltrim($li->text()), '"', '');
+//                    $description .= rtrim(ltrim(str_replace($li->text(), '"', '')));
+                    $description .= ltrim($li->text());
                 }
             } else {
                 $description = 'not found - please enter manually';
             }
+        } else {
+            $description = 'not found - please enter manually';
         }
-
         $product = $this->em->getRepository(Product::class)->findOneBy([
             'amazonLink' => $link
         ]);
@@ -95,7 +99,7 @@ class Parser {
     }
 
     private function generateProductHtml(Product $product) {
-        $content = $this->templating->render('products/template.html.twig', [
+        $content = $this->templating->render('products/productLinkTemplate.html.twig', [
             'shortTitle' => $product->getShortTitle(),
             'description' => $product->getDescription(),
             'affiliateLink' => $product->getAffiliateLink(),
