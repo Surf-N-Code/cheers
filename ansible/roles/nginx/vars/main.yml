@@ -1,2 +1,2 @@
 ---
-server_name: "{{ host_server_name|default('cheersbrosnan.com') }}"
+server_name: "www.cheersbrosnan.com cheersbrosnan.com"
