@@ -19,6 +19,11 @@
     - deploy
 
 # Symfony console commands
+- name: Drop DB if exists
+  command: '{{ symfony_console_path }} doctrine:database:drop --force'
+  tags:
+    - deploy
+
 - name: Create DB if not exists
   command: '{{ symfony_console_path }} doctrine:database:create --if-not-exists'
   register: db_create_result
