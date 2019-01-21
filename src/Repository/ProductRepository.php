@@ -55,12 +55,14 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[] Returns an array of Product objects
      */
-    public function findFirstNProducts($nextN, $idStart)
+    public function findFirstNProducts($idStart, $nextN = 3)
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.id > :id')
+            ->andWhere('p.infoComplete = :status')
             ->orderBy('p.id')
             ->setParameter(':id', $idStart)
+            ->setParameter(':status', 1)
             ->setMaxResults($nextN)
             ->getQuery()
             ->getResult()

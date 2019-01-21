@@ -26,23 +26,74 @@ class MainController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($request->isXmlHttpRequest()) {
-            $offset = $request->get('offset');
-            $limit = $request->get('limit');
-
-            $products = $this
-                ->getDoctrine()
-                ->getRepository(Product::class)
-                ->findFirstNProducts(3, 1291);
-        } else {
-            $products = $this
-                ->getDoctrine()
-                ->getRepository(Product::class)
-                ->findFirstNProducts(3, 1);
-        }
+        $products = $this
+            ->getDoctrine()
+            ->getRepository(Product::class)
+            ->findFirstNProducts(1, 3);
 
         return $this->render('base.html.twig', [
             'products' => $products
+        ]);
+    }
+
+    /**
+     * @Route("/fetchNextProducts/{i}", name="fetch_more_products")
+     */
+    public function fetchNextProducts(Request $request, $i) {
+        $limit = $request->get('limit');
+        if(!isset($limit) || $limite = '') {
+            $limit = 3;
+        }
+
+        $productStartId = 1291 + ($i * 3);
+        $products = $this
+            ->getDoctrine()
+            ->getRepository(Product::class)
+            ->findFirstNProducts($productStartId, $limit);
+
+        if(count($products) < 3) {
+            $lastPage = true;
+        }
+
+        $html = '<div class="text-center">
+                    <p class="lead lead-2 mb-5 appear-animation animated fadeInUp appear-animation-visible mt-3"
+                       data-appear-animation="fadeInUp"
+                       data-appear-animation-delay="600"
+                       style="animation-delay: 600ms;"
+                    >
+                        Sorry Bro... das waren erst einmal alle Produkte. Meld dich bei uns an und du bekommst immer den geilsten Shit direkt per Whatsapp!
+                    </p>
+                    <form action="#" method="POST"
+                          class="whatsappSignUpForm mw-100 appear-animation animated fadeInUp appear-animation-visible"
+                          data-appear-animation="fadeInUp"
+                          data-appear-animation-delay="1200"
+                          style="animation-delay: 1200ms;">
+                        <div class="col-12 text-center" id="signUpBtns">
+                            <input class="whatsappInput btn btn-outline btn-info font-weight-semibold text-2 px-4 py-3 mb-4 box-shadow-2"
+                                   placeholder="+49 deine whatsapp"/>
+                            <button class="whatsappSignUpBtn btn btn-primary  btn-xl font-weight-semibold text-2 px-5 py-3 mb-4 box-shadow-2"
+                                    type="submit">SIGN UP NOW <i class="fas fa-arrow-right ml-1"></i></button>
+                        </div>
+                    </form>
+                </div>';
+        if(!$products) {
+            return new JsonResponse([
+                'html' => $html,
+                'lastPage' => true
+            ]);
+        }
+
+        $htmlContent = "<div class='masonry row' data-plugin-masonry data-plugin-options=\"{'itemSelector': '.masonry-item'}\">";
+        foreach ($products as $index => $product) {
+            $htmlContent .= $this->renderView('products/productRowTemplate.html.twig', [
+                'product' => $product
+            ]);
+        }
+        $htmlContent .= "</div>";
+
+        return new JsonResponse([
+            'html' => $htmlContent,
+            'lastPage' => false
         ]);
     }
 
@@ -154,5 +205,23 @@ class MainController extends AbstractController
         ]);
 
         file_put_contents(__DIR__."/../../public/p/$name.html", $content);
+    }
+
+
+    /**
+     * @Route("/changeHeartCount", name="changeHeartCount");
+     */
+    public function changeHeartCount(Request $request) {
+        $delta = $request->get('delta');
+        $productId = $request->get('productId');
+
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($productId);
+        $product->changeLikes($delta);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->flush();
+
+        return new JsonResponse([$product->getLikes()]);
     }
 }

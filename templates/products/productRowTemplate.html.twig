@@ -1,0 +1,19 @@
+<div class="masonry-item no-default-style col-md-4">
+    <article class="post post-medium border-0 pb-0 mb-5">
+        <div class="post-image">
+            <a href="{{ product.affiliateLink }}">
+                <img src="{{ product.image }}" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="{{ product.shortTitle }}" />
+            </a>
+        </div>
+
+        <div class="post-content">
+            <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a href="{{ product.affiliateLink }}">{{ product.shortTitle }}</a></h2>
+            <p>{{ product.description|truncate(100, true) }}</p>
+        </div>
+
+        <div class="post-meta">
+            <button type="button" data-productId="{{ product.id }}" href="{{ path('changeHeartCount') }}" class="likeProductBtn btn btn-outline-danger"><i class="far fa-heart"></i></button>
+            <span>{{ product.likes }}</span><span> likes</span>
+        </div>
+    </article>
+</div>

@@ -51,6 +51,16 @@ class Product
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $likes;
+
+    /**
+     * @ORM\Column(type="boolean", length=255, nullable=false)
+     */
+    private $infoComplete;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,5 +156,34 @@ class Product
     public function setAmazonLink($amazonLink): void
     {
         $this->amazonLink = $amazonLink;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInfoComplete()
+    {
+        return $this->infoComplete;
+    }
+
+    /**
+     * @param mixed $infoComplete
+     */
+    public function setInfoComplete($infoComplete): void
+    {
+        $this->infoComplete = $infoComplete;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    public function changeLikes($amount): void
+    {
+        $this->likes = $this->likes + $amount;
     }
 }
