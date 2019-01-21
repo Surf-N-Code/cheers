@@ -104,7 +104,7 @@ class MainController extends AbstractController
     public function register(Request $request)
     {
         $params = $request->request->all();
-        dump($params);
+//        dump($params);
         $user = new User();
         $user->setTelephone($params['number']);
         $user->setEmail('');
@@ -137,7 +137,7 @@ class MainController extends AbstractController
     {
         $products = $repo->findAll();
 
-        dump($products);
+//        dump($products);
 
         return $this->render('products/listProducts.html.twig', [
             'products' => $products

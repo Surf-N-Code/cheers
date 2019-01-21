@@ -322,7 +322,7 @@ class CurlConnector implements CurlInterface
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
-        dump($usedProxy);
+//        dump($usedProxy);
 
         $response = curl_getinfo( $ch );
 

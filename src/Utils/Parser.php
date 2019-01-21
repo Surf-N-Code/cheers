@@ -45,9 +45,9 @@ class Parser {
 
     private function parseLink($link) {
         $this->dom->loadFromUrl($link, ['enforceEncoding' => true], new CurlConnector());
-        dump($link);
+//        dump($link);
         $imageData = $this->dom->find('#landingImage');
-        dump($imageData);
+//        dump($imageData);
         if(count($imageData) > 0) {
             $title = $imageData->getAttribute('alt');
 
@@ -67,7 +67,7 @@ class Parser {
 
         if(count($descData) > 0) {
             $lis = $descData->find('.a-list-item');
-            dump($lis);
+//            dump($lis);
             if(count($lis) > 0) {
                 foreach($lis as $li) {
 //                    $description .= rtrim(ltrim(str_replace($li->text(), '"', '')));
@@ -86,7 +86,7 @@ class Parser {
         $product->setCheersLink('');
         $product->setDescription($description);
         $product->setImage($image);
-        dump($product);
+//        dump($product);
 
         if(count($descData) > 0 && count($imageData) > 0) {
             $this->generateProductHtml($product);
@@ -118,7 +118,7 @@ class Parser {
     public function doSleep($min, $max)
     {
         $rand = rand($min, $max);
-        dump("sleeping for: ".$rand);
+//        dump("sleeping for: ".$rand);
         sleep(0);
     }
 
