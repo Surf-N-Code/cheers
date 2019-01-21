@@ -92,6 +92,13 @@
         regexp: "date.timezone ="
         line: "date.timezone = UTC"
 
+    - name: Set .env DB connection string
+      become: true
+      lineinfile:
+        dest: "{{ symfony_root_dir }}/.env"
+        regexp: "DATABASE_URL=mysql://"
+        line: "DATABASE_URL=mysql://{{ vault_mysql_credentials }}@localhost:3306/cheersBrosnan"
+
     - name: Set date.timezone for FPM
       become: true
       lineinfile:

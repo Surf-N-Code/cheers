@@ -5,18 +5,18 @@
 //     $("#signUpBtns").addClass("appear-animation animated fadeInUp appear-animation-visible");
 // }, 1200);
 
-$(document).on('hover', '.whatsappInput', function(e) {
+$('.whatsappInput').hover(function(e) {
     $(this).addClass('placeholderClass');
 }, function(a) {
     $(this).removeClass('placeholderClass');
 });
 
-$(document).on('mouseleave', '.whatsappInput', function(e) {
+$('.whatsappInput').mouseleave(function(e) {
     console.log("left");
     $(this).removeClass('placeholderClass');
-});
+})
 
-$(document).on('submit', '.whatsappSignUpForm', function() {
+$('.whatsappSignUpForm').on('submit', function(e) {
     e.preventDefault();
     console.log("logged");
     console.log("data",$('.whatsappInput').val());
