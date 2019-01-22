@@ -92,12 +92,7 @@
         regexp: "date.timezone ="
         line: "date.timezone = UTC"
 
-    - name: Set .env DB connection string
-      become: true
-      lineinfile:
-        dest: "{{ symfony_root_dir }}/.env"
-        regexp: "DATABASE_URL=mysql://"
-        line: "DATABASE_URL=mysql://{{ vault_mysql_credentials }}@localhost:3306/cheersBrosnan"
+
 
     - name: Set date.timezone for FPM
       become: true
@@ -166,6 +161,15 @@
       register: composer_self_update
       changed_when: "not composer_self_update.stdout|search('You are already using composer version')"
 #      when: composer_self_update is search("You are already using composer version")
+      tags:
+        - deploy
+
+    - name: Set .env DB connection string
+      become: true
+      lineinfile:
+        dest: "{{ symfony_root_dir }}/.env"
+        regexp: "DATABASE_URL="
+        line: "DATABASE_URL=mysql://{{ vault_mysql_credentials }}@localhost:3306/cheersBrosnan"
       tags:
         - deploy
 
