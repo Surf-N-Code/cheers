@@ -140,7 +140,6 @@
 
                                                 <div class="post-content">
                                                     <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a href="{{ product.affiliateLink }}">{{ product.shortTitle }}</a></h2>
-                                                    <p>Die glitzernden Silberst&uuml;ckchen stehen f&uuml;r die Einhorntr&auml;nen und sind zu 100% essbar.</p>
                                                     <p>{{ product.description|truncate(100, true) }}</p>
 
                                                     <div class="post-meta">
@@ -165,18 +164,9 @@
             <footer id="footer" class="mt-0">
                 <div class="container my-4">
                     <div class="row py-5">
-                        <div class="col-md-5 col-lg-3 mb-5 mb-lg-0">
-                            <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Impressum</h5>
-                            <p class="text-4 mb-1">Dilthey, Norman Leonhard</p>
-                            <p class="text-4 mb-4 pb-1">Im Heidewinkel 22</p>
-
-                            <p class="text-4 mb-1 pt-2">+49 176 123 123 123</p>
-                            <p class="text-4 mb-0"><a href="mailto:cheerbrosnan@gmail.com">cheerbrosnan@gmail.com</a></p>
-                        </div>
-
                         <div class="col-lg-4">
                             <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Whatsapp service</h5>
-                            <p class="text-4 mb-1">Du willst immer den neuesen Shit bekommen?</p>
+                            <p class="text-4 mb-1">Du willst immer den neuesten Shit bekommen?</p>
                             <p class="text-4">Melde dich für den Whatsapp Service an :)</p>
                             <div class="alert alert-success d-none" id="newsletterSuccess">
                                 <strong>Success!</strong> Wir haben die in unseren elitären Kreis aufgenommen.
@@ -191,19 +181,28 @@
                                 </div>
                             </form>
                         </div>
-
-                        <div class="col-md-5 col-lg-3 mb-5 mb-lg-0">
-                            <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Datenschutz</h5>
-                            <p class="text-4 mb-1"><a href="{{ path('datenschutz') }}">Hier geht es zu unseren Datenschutzbestimmungen</a></p>
-                        </div>
                     </div>
                 </div>
                 <div class="footer-copyright footer-copyright-style-2">
                     <div class="container py-2">
                         <div class="row py-4">
-                            <div class="col d-flex align-items-center justify-content-center mb-4 mb-lg-0">
-                                <p>© Copyright 2019.</p>
+                            <div class="col-8 d-flex align-items-start justify-content-start mb-4 mb-lg-0">
+                                © Copyright 2019.
                             </div>
+                            <div class="col-2 d-flex align-items-center justify-content-center mb-4 mb-lg-0">
+                                <a href="{{ path('datenschutz') }}">Datenschutz</a>
+                            </div>
+                            <div class="col-2 d-flex align-items-center justify-content-center mb-4 mb-lg-0">
+                                <a href="{{ path('impressum') }}">Impressum</a>
+                            </div>
+                        </div>
+                        <div class="row py-2 justify-content-start">
+                            <div class="col-12 d-flex align-items-start mb-4 mb-lg-0">
+                                <div class="col d-flex align-items-center justify-content-center mb-4 mb-lg-0">
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
