@@ -29,7 +29,7 @@ class MainController extends AbstractController
         $products = $this
             ->getDoctrine()
             ->getRepository(Product::class)
-            ->findFirstNProducts(1, 3);
+            ->findFirstNProducts(1, 6);
 
         return $this->render('base.html.twig', [
             'products' => $products
@@ -41,19 +41,18 @@ class MainController extends AbstractController
      */
     public function fetchNextProducts(Request $request, $i) {
         $limit = $request->get('limit');
-        if(!isset($limit) || $limite = '') {
-            $limit = 3;
+        if(!isset($limit) || $limit = '') {
+            $limit = 6;
         }
 
-        $productStartId = 1291 + ($i * 3);
+        $productStartId = 1291 + ($i * $limit);
         $products = $this
             ->getDoctrine()
             ->getRepository(Product::class)
             ->findFirstNProducts($productStartId, $limit);
 
-        if(count($products) < 3) {
-            $lastPage = true;
-        }
+        $lastPage = false;
+
 
         $html = '<div class="text-center">
                     <p class="lead lead-2 mb-5 appear-animation animated fadeInUp appear-animation-visible mt-3"
@@ -76,6 +75,7 @@ class MainController extends AbstractController
                         </div>
                     </form>
                 </div>';
+
         if(!$products) {
             return new JsonResponse([
                 'html' => $html,
@@ -91,9 +91,14 @@ class MainController extends AbstractController
         }
         $htmlContent .= "</div>";
 
+        if(count($products) < $limit) {
+            $lastPage = true;
+            $htmlContent .= $html;
+        }
+
         return new JsonResponse([
             'html' => $htmlContent,
-            'lastPage' => false
+            'lastPage' => $lastPage
         ]);
     }
 
@@ -177,11 +182,11 @@ class MainController extends AbstractController
     public function checkCheersLinks()
     {
         $ret = [];
-        do {
-            $product = $this->getDoctrine()->getRepository(Product::class)->findOneEmptyLink();
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        foreach ($products as $index => $product) {
             $this->generateCheersLinks($product);
             array_push($ret, $product->getShortTitle());
-        } while($product);
+        }
 
         return new Response("Html generated for products: ".json_encode($ret));
     }
@@ -192,7 +197,7 @@ class MainController extends AbstractController
         }
 
         $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/")+4, strlen($product->getAffiliateLink()));
-        $product->setCheersLink("http://cheersbrosnan.com/p/$name");
+        $product->setCheersLink("http://cheersbrosnan.com/p/$name.html");
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
@@ -223,5 +228,12 @@ class MainController extends AbstractController
         $em->flush();
 
         return new JsonResponse([$product->getLikes()]);
+    }
+
+    /**
+     * @Route("/datenschutz", name="datenschutz")
+     */
+    public function datenschutz() {
+        return $this->render('datenschutz.html.twig');
     }
 }

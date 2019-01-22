@@ -54,7 +54,7 @@
     </head>
     <body>
         <div class="body">
-            {% block body_content %}
+
             <header id="header" class="header-transparent header-transparent-dark-bottom-border header-transparent-dark-bottom-border-1 header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 30, 'stickyHeaderContainerHeight': 70}">
                 <div class="header-body border-top-0 bg-dark box-shadow-none">
                     <div class="header-container container">
@@ -81,6 +81,7 @@
             </header>
 
             <div class="container py-4">
+                {% block body_content %}
                 <div class="row justify-content-center mt-4">
                     {#<img id="pageHeaderImage" src="{{ asset('images/main_background.jpg') }}">#}
                     <div class="col-12 col-sm-auto mt-5">
@@ -153,12 +154,61 @@
                                     {% endfor %}
                                 </div>
                             </div>
+                            <div class="row justify-content-center loadMoreProductsWrapper col-12 text-center" >
+                                <button class="loadMoreProductsBtn btn btn-outline-info btn-xl font-weight-semibold text-2 px-5 py-3 mb-4 box-shadow-2">Hey Bro, mehr bitte</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% endblock body_content %}
             </div>
+            <footer id="footer" class="mt-0">
+                <div class="container my-4">
+                    <div class="row py-5">
+                        <div class="col-md-5 col-lg-3 mb-5 mb-lg-0">
+                            <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Impressum</h5>
+                            <p class="text-4 mb-1">Dilthey, Norman Leonhard</p>
+                            <p class="text-4 mb-4 pb-1">Im Heidewinkel 22</p>
+
+                            <p class="text-4 mb-1 pt-2">+49 176 123 123 123</p>
+                            <p class="text-4 mb-0"><a href="highfive@cheersbrosnan.com">cheerbrosnan@gmail.com</a></p>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Whatsapp service</h5>
+                            <p class="text-4 mb-1">Du willst immer den neuesen Shit bekommen?</p>
+                            <p class="text-4">Melde dich für den Whatsapp Service an :)</p>
+                            <div class="alert alert-success d-none" id="newsletterSuccess">
+                                <strong>Success!</strong> Wir haben die in unseren elitären Kreis aufgenommen.
+                            </div>
+                            <div class="alert alert-danger d-none" id="newsletterError"></div>
+                            <form id="newsletterForm" action="#" method="POST" class="mw-100">
+                                <div class="input-group input-group-rounded">
+                                    <input id="signUpInputFooter" class="form-control form-control-sm bg-light px-4 text-3" placeholder="+49 deine Whatsapp ..." name="newsletterEmail" id="newsletterEmail" type="text">
+                                    <span class="input-group-append">
+										<button id="signUpBtnFooter" class="btn btn-primary text-color-light text-2 py-3 px-4" type="submit">LET'S GO!</button>
+									</span>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-5 col-lg-3 mb-5 mb-lg-0">
+                            <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Datenschutz</h5>
+                            <p class="text-4 mb-1"><a href="{{ path('datenschutz') }}">Hier geht es zu unseren Datenschutzbestimmungen</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright footer-copyright-style-2">
+                    <div class="container py-2">
+                        <div class="row py-4">
+                            <div class="col d-flex align-items-center justify-content-center mb-4 mb-lg-0">
+                                <p>© Copyright 2019.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-        {% endblock %}
         {% block body %}{% endblock %}
         <script src="{{ asset('vendor/modernizr/modernizr.min.js') }}"></script>
         <!-- Vendor -->

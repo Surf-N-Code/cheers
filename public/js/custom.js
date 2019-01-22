@@ -6,6 +6,7 @@
 // }, 1200);
 
 $('.whatsappInput').hover(function(e) {
+    console.log("hovering");
     $(this).addClass('placeholderClass');
 }, function(a) {
     $(this).removeClass('placeholderClass');
@@ -58,23 +59,57 @@ $('.whatsappSignUpForm').on('submit', function(e) {
     });
 });
 
+$('#newsletterForm').on('submit', function(e) {
+    e.preventDefault();
+    $btn = $('#signUpBtnFooter');
+    $input = $('#signUpInputFooter');
+
+    var originText = "LET'S GO <i class='fas fa-arrow-right ml-1'></i>";
+
+    $.ajax({
+        type: 'POST',
+        url: '/regWhatsapp',
+        data: {
+            'number': $input.val()
+        },
+        dataType: 'json',
+        success: function(data) {
+            if (data.status == "success") {
+                // $btn.html(originText);
+                $input.val("");
+                $btn.removeClass('btn btn-primary');
+                $btn.addClass('btn btn-success');
+                $btn.html('<i class="fas fa-check"></i> CHEERS BRO!');
+
+            } else {
+
+            }
+        },
+        error: function(e) {
+            $btn.html(originText);
+            $btn.attr("disabled", false);
+        }
+    });
+});
+
 is_processing = false;
 lastPage = false;
 productIteration = 1;
 function addMoreElements() {
     console.log("add more elements");
     is_processing = true;
-    $('#mainProductList').append('<div class="row justify-content-center loadMoreProductsSpinner" ><i class="fa fa-spinner fa-spin"></i></div>');
+
     $.ajax({
         type: "GET",
         //FOS Routing
         // url: Routing.generate('route_name', {page: page}),
         url: "/fetchNextProducts/"+productIteration,
         success: function(data) {
-            // console.log(data.html);
+            console.log(data.html);
             if (data.html.length > 0) {
                 console.log("should append");
-                $('.loadMoreProductsSpinner').hide();
+                $('.loadMoreProductsWrapper').hide();
+                $('.loadMoreProductsBtn').html("Hey Bro, mehr bitte");
                 $('#mainProductList').append(data.html);
                 lastPage = data.lastPage;
             } else {
@@ -87,17 +122,25 @@ function addMoreElements() {
         }
     });
 }
+$(document).on('click', '.loadMoreProductsBtn', function(e) {
+    e.preventDefault();
+    $('.loadMoreProductsBtn').html("Ich suche <i class='fa fa-spinner fa-spin'></i>");
+    addMoreElements();
+    productIteration++;
+});
 
 $(window).scroll(function() {
     var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
     //Modify this parameter to establish how far down do you want to make the ajax call
-    var scrolltrigger = 0.98;
+    var scrolltrigger = 0.5;
     if ((wintop / (docheight - winheight)) > scrolltrigger) {
 
         //I added the is_processing variable to keep the ajax asynchronous but avoiding making the same call multiple times
         if (lastPage === false && is_processing === false) {
-            addMoreElements();
-            productIteration++;
+            $('.loadMoreProductsWrapper').show();
+
+            // addMoreElements();
+            // productIteration++;
         }
     }
 });

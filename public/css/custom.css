@@ -1,6 +1,6 @@
 /* Add here all your CSS customizations */
-#signUpBtns {
-    /*visibility: hidden;*/
+#loadMoreProductsBtn {
+    display: none;
 }
 
 #pageHeader {
@@ -23,12 +23,12 @@
     color: white;
 }
 
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    padding: 6px 0px;
-    border-radius: 15px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 1.42857;
+#footer a {
+    color: #e36159;
+    text-decoration: underline;
+}
+
+.datenschutzWrapper {
+    margin-top: 20%;
+    margin-bottom: 5%;
 }

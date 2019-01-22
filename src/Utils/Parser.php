@@ -91,7 +91,7 @@ class Parser {
         if(count($descData) > 0 && count($imageData) > 0) {
             $this->generateProductHtml($product);
         }
-
+die();
         $this->em->persist($product);
         $this->em->flush();
 
@@ -99,6 +99,7 @@ class Parser {
     }
 
     private function generateProductHtml(Product $product) {
+        dump("generating html");
         $content = $this->templating->render('products/productLinkTemplate.html.twig', [
             'shortTitle' => $product->getShortTitle(),
             'description' => $product->getDescription(),
@@ -106,9 +107,11 @@ class Parser {
             'imageLink' => $product->getImage()
         ]);
 
-        $name = substr(strpos($product->getAffiliateLink(), "/")+1, strlen($product->getAffiliateLink()));
+        $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/")+4, strlen($product->getAffiliateLink()));
+        dump($name);
 
-        $product->setCheersLink("http://www.cheersbrosnan.com/p/$name");
+        $product->setCheersLink("http://www.cheersbrosnan.com/p/$name.html");
+        dump($product);
         $this->em->persist($product);
         $this->em->flush();
 
