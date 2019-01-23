@@ -54,26 +54,14 @@ class MainController extends AbstractController
         $lastPage = false;
 
 
-        $html = '<div class="text-center">
-                    <p class="lead lead-2 mb-5 appear-animation animated fadeInUp appear-animation-visible mt-3"
-                       data-appear-animation="fadeInUp"
-                       data-appear-animation-delay="600"
-                       style="animation-delay: 600ms;"
-                    >
-                        Sorry Bro... das waren erst einmal alle Produkte. Meld dich bei uns an und du bekommst immer den geilsten Shit direkt per Whatsapp!
-                    </p>
-                    <form action="#" method="POST"
-                          class="whatsappSignUpForm mw-100 appear-animation animated fadeInUp appear-animation-visible"
-                          data-appear-animation="fadeInUp"
-                          data-appear-animation-delay="1200"
-                          style="animation-delay: 1200ms;">
-                        <div class="col-12 text-center" id="signUpBtns">
-                            <input class="whatsappInput btn btn-outline btn-info font-weight-semibold text-2 px-4 py-3 mb-4 box-shadow-2"
-                                   placeholder="+49 deine whatsapp"/>
-                            <button class="whatsappSignUpBtn btn btn-primary  btn-xl font-weight-semibold text-2 px-5 py-3 mb-4 box-shadow-2"
-                                    type="submit">SIGN UP NOW <i class="fas fa-arrow-right ml-1"></i></button>
-                        </div>
-                    </form>
+        $html = '<div class="col-12 text-center appear-animation animated fadeInUp appear-animation-visible" id="signUpBtns"
+                        data-appear-animation="fadeInUp"
+                        data-appear-animation-delay="1200"
+                        style="animation-delay: 1200ms;">
+                    <a class="btn btn-primary  btn-xl font-weight-semibold text-2 px-5 py-3 mb-4 box-shadow-2"
+                        href="https://api.whatsapp.com/send?phone=4921146811188&text=Hey%20Bro!%20Sende%20diese%20Nachricht%20und%20speichere%20unsere%20Nummer%20in%20deinen%20Kontakten%2C%20um%20unseren%20WhatsApp%20Service%20zu%20abonnieren!">
+                        Whatsapp Signup <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
                 </div>';
 
         if(!$products) {
