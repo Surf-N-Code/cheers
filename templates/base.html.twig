@@ -1,24 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html  itemscope itemtype="http://schema.org/Article">
     <head>
     <title>{% block title %}Cheers Brosnan!{% endblock %}</title>
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
     <!-- Basic -->
     <meta charset="UTF-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="keywords" content="Geschenkideen Lustige Produkte" />
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="Lustige Geschenkideen und Gadgets">
+    <meta itemprop="description" content="Feiern, trinken und verrücktes Shoppen! Ich habe die Top-Shopping Tips, Geschenke und Gadgets für euch Lauchs!!111 Subskrebieren, die Betonung liegt auf Bieren.">
+    <meta itemprop="image" content="http://cheersbrosnan.com/images/cheersBrosnan.png">
+
+    <meta name="keywords" content="Geschenkideen Lustige Produkte Gadgets Shopping" />
     <meta name="description" content="Cheers Brosnan">
     <meta name="author" content="Norman Dilthey">
+
+    <!-- SEO -->
+    <meta property="og:title" content="Lustige Geschenkideen und Gadgets" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Feiern, trinken und verrücktes Shoppen! Ich habe die Top-Shopping Tips, Geschenke und Gadgets für euch Lauchs!!111 Subskrebieren, die Betonung liegt auf Bieren." />
+    <meta property="og:image" content="http://cheersbrosnan.com/images/cheersBrosnan.png" />
+    <meta property="og:url" content="http://cheersbrosnan.com" />
+    <meta property="og:site_name" content="CheersBrosnan" />
+    <meta property="article:section" content="Shopping" />
+    <meta property="article:tag" content="Geschenkideen Lustige Produkte Gadgets Shopping" />
+    <meta property="article:publisher" content="https://www.facebook.com/CheersBrosnan-569387330189618" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="CheersBrosnan">
+    <meta name="twitter:site" content="@cheersBrosnan">
+    <meta name="twitter:title" content="Lustige Geschenkideen und Gadgets">
+    <meta name="twitter:description" content="Feiern, trinken und verrücktes Shoppen! Ich habe die Top-Shopping Tips, Geschenke und Gadgets für euch Lauchs!!111 Subskrebieren, die Betonung liegt auf Bieren.">
+    <meta name="twitter:creator" content="@cheersBrosnan">
+    <!-- Twitter summary card with large image must be at least 280x150px -->
+    <meta name="twitter:image:src" content="http://cheersbrosnan.com/images/cheersBrosnan_twitter_large.jpeg">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-
-    <meta charset="UTF-8">
 
     {% block stylesheets %}
         <!-- Web Fonts  -->
@@ -63,7 +88,7 @@
                                 <div class="header-row">
                                     <div class="header-logo">
                                         <a href="{{ path('home') }}">
-                                            <img alt="Porto" width="60" height="60" src="{{ asset('images/logo_circle.png') }}">
+                                            <img alt="Porto" width="60" height="60" src="{{ asset('images/cheersBrosnan.png') }}">
                                         </a>
                                     </div>
                                     <div class="header-row pl-4 justify-content-end">
