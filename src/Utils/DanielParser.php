@@ -3,10 +3,7 @@
 namespace App\Utils;
 
 use App\Entity\DanielProducts;
-use App\Entity\Product;
-use App\Repository\ProductRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\ORMException;
 use PHPHtmlParser\Dom;
 use Psr\Log\LoggerAwareTrait;
 
@@ -14,18 +11,11 @@ class DanielParser{
 
     use LoggerAwareTrait;
 
-    private $asin;
     private $dom;
     /**
      * @var ObjectManager
      */
     private $em;
-    private $productUrl;
-    private $isDebug = false;
-    /**
-     * @var \Twig_Environment
-     */
-    private $templating;
 
     public function __construct(ObjectManager $em, \Twig_Environment $templating) {
         $this->dom = new Dom;
