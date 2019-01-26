@@ -197,7 +197,7 @@ class MainController extends AbstractController
             'imageLink' => $product->getImage()
         ]);
 
-        file_put_contents(__DIR__."/../../public/p/$name.html", $content);
+        file_put_contents(__DIR__."/../../templates/products/p/$name.html", $content);
     }
 
 
@@ -230,5 +230,19 @@ class MainController extends AbstractController
      */
     public function impressum() {
         return $this->render('impressum.html.twig');
+    }
+
+    /**
+     * @Route("/test", name="impressum")
+     */
+    public function test() {
+        return $this->render('fbtest.html.twig');
+    }
+
+    /**
+     * @Route("/p/{file}", name="product_detail_link")
+     */
+    public function showProductDetail($file) {
+        return $this->render("products/p/$file");
     }
 }

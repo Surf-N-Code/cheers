@@ -29,7 +29,7 @@
         <meta itemprop="headline" content="Lustige Geschenkideen und Gadgets">
 
         <meta name="keywords" content="Geschenkideen Lustige Produkte Gadgets Shopping" />
-        <meta name="description" content="Cheers Brosnan">
+        <meta name="description" content="Feiern, trinken und verrücktes Shoppen! Ich habe die Top-Shopping Tips, Geschenke und Gadgets für euch Lauchs!!111 Subskrebieren, die Betonung liegt auf Bieren.">
         <meta name="author" content="Norman Dilthey">
         <meta name="publisher" content="Norman Dilthey">
 
@@ -113,32 +113,56 @@
 
     </head>
     <body>
-        <div class="body">
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '320982792006389',
+                xfbml      : true,
+                version    : 'v3.2'
+            });
+            FB.AppEvents.logPageView();
+        };
 
-            <header id="header" class="header-transparent header-transparent-dark-bottom-border header-transparent-dark-bottom-border-1 header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 30, 'stickyHeaderContainerHeight': 70}">
-                <div class="header-body border-top-0 bg-dark box-shadow-none">
-                    <div class="header-container container">
-                        <div class="header-row">
-                            <div class="header-column">
-                                <div class="header-row">
-                                    <div class="header-logo">
-                                        <a href="{{ path('home') }}">
-                                            <img alt="Porto" width="60" height="60" src="{{ asset('images/cheersBrosnan.png') }}">
-                                        </a>
-                                    </div>
-                                    <div class="header-row pl-4 justify-content-end">
-                                        <ul class="header-social-icons social-icons d-none d-sm-block social-icons-clean m-0">
-                                            <li class="social-icons-facebook"><a href="https://www.facebook.com/CheersBrosnan-569387330189618" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li class="social-icons-twitter"><a href="https://twitter.com/CheersBrosnan" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                                            <li class="social-icons-instagram"><a href="https://www.instagram.com/cheersbrosnan/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a></li>
-                                        </ul>
-                                    </div>
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    {#<div#}
+        {#class="fb-like"#}
+        {#data-share="true"#}
+        {#data-width="450"#}
+        {#data-show-faces="true">#}
+    {#</div>#}
+    <div class="fb-share-button" data-href="http://cheersbrosnan.com" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcheersbrosnan.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Teilen</a></div>
+        <header id="header" class="header-transparent header-transparent-dark-bottom-border header-transparent-dark-bottom-border-1 header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 30, 'stickyHeaderContainerHeight': 70}">
+            <div class="header-body border-top-0 bg-dark box-shadow-none">
+                <div class="header-container container">
+                    <div class="header-row">
+                        <div class="header-column">
+                            <div class="header-row">
+                                <div class="header-logo">
+                                    <a href="{{ path('home') }}">
+                                        <img alt="CheersBrosnan" width="60" height="60" src="{{ asset('images/cheersBrosnan.png') }}">
+                                    </a>
+                                </div>
+                                <div class="header-row pl-4 justify-content-end">
+                                    <ul class="header-social-icons social-icons d-none d-sm-block social-icons-clean m-0">
+                                        <li class="social-icons-facebook"><a href="https://www.facebook.com/CheersBrosnan-569387330189618" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li class="social-icons-twitter"><a href="https://twitter.com/CheersBrosnan" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li class="social-icons-instagram"><a href="https://www.instagram.com/cheersbrosnan/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </header>
+            </div>
+        </header>
 
             <div class="container py-4">
                 {% block body_content %}
@@ -214,12 +238,15 @@
                                                     <div class="post-meta">
                                                         <button type="button" data-productId="{{ product.id }}" href="{{ path('changeHeartCount') }}" class="likeProductBtn btn btn-outline-danger"><i class="far fa-heart"></i></button>
                                                         <span>{{ product.likes }}</span><span> likes</span>
+                                                        <div class="fb-like" data-href="http://cheersbrosnan.com" data-layout="standard" data-action="recommend" data-size="small" data-show-faces="false" data-share="true"></div>
                                                     </div>
 
                                                 </div>
                                             </article>
                                         </div>
+
                                     {% endfor %}
+
                                 </div>
                             </div>
                             <div class="row justify-content-center loadMoreProductsWrapper col-12 text-center" >
