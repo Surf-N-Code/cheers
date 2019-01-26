@@ -201,7 +201,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/getCheersLinks" name="get_cheers_links")
+     * @Route("/getCheersLinks", name="get_cheers_links")
      */
     private function getCheersLinks() {
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
