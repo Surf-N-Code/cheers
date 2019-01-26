@@ -243,6 +243,6 @@ class MainController extends AbstractController
      * @Route("/p/{file}", name="product_detail_link")
      */
     public function showProductDetail($file) {
-        return $this->render(__DIR__."/../../public/p/$file");
+        return $this->render("products/p/$file");
     }
 }
