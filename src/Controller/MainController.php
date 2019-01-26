@@ -201,6 +201,24 @@ class MainController extends AbstractController
     }
 
     /**
+     * @Route("/getCheersLinks" name="get_cheers_links")
+     */
+    private function getCheersLinks() {
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        foreach ($products as $index => $product) {
+            if (!$product) {
+                return new Response("No more HTML files to generate");
+            }
+
+            $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/") + 4, strlen($product->getAffiliateLink()));
+            $product->setCheersLink("http://cheersbrosnan.com/p/$name.html");
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
+        }
+    }
+
+    /**
      * @Route("/changeHeartCount", name="changeHeartCount");
      */
     public function changeHeartCount(Request $request) {
