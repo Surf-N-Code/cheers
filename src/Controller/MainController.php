@@ -216,6 +216,7 @@ class MainController extends AbstractController
             $em->persist($product);
             $em->flush();
         }
+        return new Response("");
     }
 
     /**
