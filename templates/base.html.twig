@@ -235,11 +235,11 @@
                                                     <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a href="{{ product.affiliateLink }}">{{ product.shortTitle }}</a></h2>
                                                     <p>{{ product.description|truncate(100, true) }}</p>
 
-                                                    <div class="post-meta">
-                                                        <button type="button" data-productId="{{ product.id }}" href="{{ path('changeHeartCount') }}" class="likeProductBtn btn btn-outline-danger"><i class="far fa-heart"></i></button>
-                                                        <span>{{ product.likes }}</span><span> likes</span>
-                                                        <div class="fb-like" data-href="http://cheersbrosnan.com" data-layout="standard" data-action="recommend" data-size="small" data-show-faces="false" data-share="true"></div>
-                                                    </div>
+                                                    {#<div class="post-meta">#}
+                                                        {#<button type="button" data-productId="{{ product.id }}" href="{{ path('changeHeartCount') }}" class="likeProductBtn btn btn-outline-danger"><i class="far fa-heart"></i></button>#}
+                                                        {#<span>{{ product.likes }}</span><span> likes</span>#}
+                                                        {#<div class="fb-like" data-href="http://cheersbrosnan.com" data-layout="standard" data-action="recommend" data-size="small" data-show-faces="false" data-share="true"></div>#}
+                                                    {#</div>#}
 
                                                 </div>
                                             </article>
