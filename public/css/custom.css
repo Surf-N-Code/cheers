@@ -3,8 +3,8 @@
     display: none;
 }
 
-#pageHeader {
-    height: 60vh;
+.social-icons i {
+    line-height: 2;
 }
 
 .placeholderClass::-webkit-input-placeholder {
