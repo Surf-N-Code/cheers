@@ -91,7 +91,7 @@ class Parser {
         if(count($descData) > 0 && count($imageData) > 0) {
             $this->generateProductHtml($product);
         }
-die();
+
         $this->em->persist($product);
         $this->em->flush();
 

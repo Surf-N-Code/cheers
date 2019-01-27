@@ -203,7 +203,7 @@ class MainController extends AbstractController
     /**
      * @Route("/getCheersLinks", name="get_cheers_links")
      */
-    private function getCheersLinks() {
+    public function getCheersLinks() {
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
         foreach ($products as $index => $product) {
             if (!$product) {
