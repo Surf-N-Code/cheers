@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body_content %}
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 col-sm-auto mt-5">
+            <div class="row justify-content-center error-404">
+                <div class="col-12 col-sm-auto mt-5 py-5">
+                    Oups... Fehler
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-auto mt-3 py-3">
+                    <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2">
+                        <a href="https://amzn.to/2CqpP5F">In der zwischenzeit... Prost!</a>
+                    </h2>
+                    <a href="https://amzn.to/2CqpP5F">
+                        <img src="https://images-eu.ssl-images-amazon.com/images/I/51AaYNyYiVL._SY300_QL70_.jpg" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="Wish it was a beer!" />
+                    </a>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-auto mt-3 py-3">
+                    Oder ab zurück zu den anderen <a href="{{ path('home') }}">Lustigen Geschenkartikeln</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
