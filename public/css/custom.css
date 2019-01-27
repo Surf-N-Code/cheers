@@ -33,3 +33,43 @@
     margin-top: 20%;
     margin-bottom: 5%;
 }
+
+/** Products page mobile friendly **/
+@media screen and (max-width:1270px) {
+
+    tr, td {
+        padding:0;
+        border-bottom:1px solid black;
+    }
+
+    table {
+        border:none;
+    }
+
+    thead {
+        display:none;
+    }
+
+    tr {
+        float: left;
+        width: 100%;
+        margin-bottom: 2em;
+    }
+
+    td {
+        float: left;
+        width: 100%;
+        padding:1em;
+    }
+
+    td::before {
+        content:attr(data-label);
+        word-wrap: break-word;
+        background: #eee;
+        width: 20%;
+        float:left;
+        padding:1em;
+        font-weight: bold;
+        margin:-1em 1em -1em -1em;
+    }
+}
