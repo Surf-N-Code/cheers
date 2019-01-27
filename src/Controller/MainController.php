@@ -185,7 +185,7 @@ class MainController extends AbstractController
         }
 
         $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/")+4, strlen($product->getAffiliateLink()));
-        $product->setCheersLink("http://cheersbrosnan.com/p/$name.html");
+        $product->setCheersLink("https://cheersbrosnan.com/p/$name.html");
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
@@ -211,7 +211,7 @@ class MainController extends AbstractController
             }
 
             $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/") + 4, strlen($product->getAffiliateLink()));
-            $product->setCheersLink("http://cheersbrosnan.com/p/$name.html");
+            $product->setCheersLink("https://cheersbrosnan.com/p/$name.html");
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();

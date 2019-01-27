@@ -110,7 +110,7 @@ die();
         $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/")+4, strlen($product->getAffiliateLink()));
         dump($name);
 
-        $product->setCheersLink("http://www.cheersbrosnan.com/p/$name.html");
+        $product->setCheersLink("https://www.cheersbrosnan.com/p/$name.html");
         dump($product);
         $this->em->persist($product);
         $this->em->flush();
