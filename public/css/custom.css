@@ -7,6 +7,16 @@
     line-height: 2;
 }
 
+.heartIcon {
+    font-size: 1.2rem;
+    color: white;
+}
+
+.shareIcon {
+    font-size: 1.2rem;
+    color: white;
+}
+
 .placeholderClass::-webkit-input-placeholder {
     color: white;
 }

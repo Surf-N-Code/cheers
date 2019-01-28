@@ -132,12 +132,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
-    {#<div#}
-        {#class="fb-like"#}
-        {#data-share="true"#}
-        {#data-width="450"#}
-        {#data-show-faces="true">#}
-    {#</div>#}
+
     {#<div class="fb-share-button" data-href="http://cheersbrosnan.com" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcheersbrosnan.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Teilen</a></div>#}
         <header id="header" class="header-transparent header-transparent-dark-bottom-border header-transparent-dark-bottom-border-1 header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 20, 'stickyHeaderContainerHeight': 70}">
             <div class="header-body border-top-0 bg-dark box-shadow-none">
@@ -216,7 +211,13 @@
                         </div>
                     </div>
                 </div>
-
+                    <div class="fb-share-button"
+                         data-href="https://cheersbrosnan.com/p/2AD5jyD.html"
+                         data-layout="button_count"
+                         data-size="small"
+                         data-mobile-iframe="true">
+                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcheersbrosnan.com%2Fp%2F2AD5jyD.html&amp;src=sdkpreparse"
+                           class="fb-xfbml-parse-ignore">Teilen</a></div>
                 <div class="row mt-5" id="productsContentWrapper">
                     <div class="col">
                         <div class="blog-posts">
@@ -236,10 +237,16 @@
                                                     <p>{{ product.description|truncate(100, true) }} </p>
 
                                                     <div class="post-meta">
-                                                        <button type="button" data-productId="{{ product.id }}" href="{{ path('changeHeartCount') }}" class="likeProductBtn btn btn-outline-danger"><i class="far fa-heart"></i></button>
-                                                        <span>{{ product.likes }}</span><span> likes</span>
-                                                        <div class="fb-like" data-href="https://cheersbrosnan.com" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+                                                        {#<i class="far fa-heart">Teilen</i>#}
+                                                        <a class="btn btn-danger likeProductBtn" href="{{ path('changeHeartCount') }}" data-productId="{{ product.id }}">
+                                                            <i class="far fa-heart heartIcon"></i><span  class="likeCount">{{ product.likes }}</span><span> likes</span>
+                                                        </a>
+                                                        <a target="popup-beispiel" onClick="javascript:open('', 'popup-beispiel', 'height=600,width=500,resizable=no')" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcheersbrosnan.com%2Fp%2F{{ product.cheersLink[28:] }}&amp;src=sdkpreparse"
+                                                           class="btn btn-info shareIcon fb-xfbml-parse-ignore"><i class="fa fa-share"></i></a>
+                                                        {#<button type="button" data-productId="{{ product.id }}" href="{{ path('changeHeartCount') }}" class="likeProductBtn btn btn-outline-danger">#}
+                                                        {#<div class="fb-like" data-href="https://cheersbrosnan.com" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>#}
                                                     </div>
+
 
                                                 </div>
                                             </article>

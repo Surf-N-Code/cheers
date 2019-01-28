@@ -147,13 +147,16 @@ $(window).scroll(function() {
 
 $(document).on('click', '.likeProductBtn', function(e) {
     e.preventDefault();
-    $html = parseInt($(this).next().html());
+    $likesElem = $(this).find('.likeCount');
+    $likes = parseInt($likesElem.html());
+
+
     var change = 0;
     if($(this).hasClass('btn-success')) {
-        $(this).next().html($html-1);
+        $likesElem.html($likes-1);
         change = -1;
     } else {
-        $(this).next().html($html+1);
+        $likesElem.html($likes+1);
         change = 1;
     }
 
@@ -163,5 +166,5 @@ $(document).on('click', '.likeProductBtn', function(e) {
         data: { delta: change, productId: $(this).attr('data-productId')}
     });
 
-    $(this).toggleClass('btn-outline-danger').toggleClass('btn-success');
+    $(this).toggleClass('btn-danger').toggleClass('btn-success');
 });
