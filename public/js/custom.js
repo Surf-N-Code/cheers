@@ -150,7 +150,6 @@ $(document).on('click', '.likeProductBtn', function(e) {
     $likesElem = $(this).find('.likeCount');
     $likes = parseInt($likesElem.html());
 
-
     var change = 0;
     if($(this).hasClass('btn-success')) {
         $likesElem.html($likes-1);
