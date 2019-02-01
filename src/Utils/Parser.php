@@ -99,7 +99,7 @@ class Parser {
     }
 
     private function generateProductHtml(Product $product) {
-        dump("generating html");
+//        dump("generating html");
         $content = $this->templating->render('products/productLinkTemplate.html.twig', [
             'shortTitle' => $product->getShortTitle(),
             'description' => $product->getDescription(),
@@ -108,10 +108,10 @@ class Parser {
         ]);
 
         $name = substr($product->getAffiliateLink(), strpos($product->getAffiliateLink(), ".to/")+4, strlen($product->getAffiliateLink()));
-        dump($name);
+//        dump($name);
 
         $product->setCheersLink("https://www.cheersbrosnan.com/p/$name.html");
-        dump($product);
+//        dump($product);
         $this->em->persist($product);
         $this->em->flush();
 
