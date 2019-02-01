@@ -27,7 +27,7 @@ class Product
     private $shortTitle;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     private $amazonLink;
 
