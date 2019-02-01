@@ -48,6 +48,7 @@ class Parser {
 //        dump($link);
         $imageData = $this->dom->find('#landingImage');
 //        dump($imageData);
+        $complete = 0;
         if(count($imageData) > 0) {
             $title = $imageData->getAttribute('alt');
 
@@ -56,7 +57,7 @@ class Parser {
             } else {
                 $image = $imageData->getAttribute('data-old-hires');
             }
-
+            $complete = 1;
         } else {
             $title = 'not found - please enter manually';
             $image = 'not found - please enter manually';
@@ -73,6 +74,7 @@ class Parser {
 //                    $description .= rtrim(ltrim(str_replace($li->text(), '"', '')));
                     $description .= ltrim($li->text());
                 }
+                $complete = 1;
             } else {
                 $description = 'not found - please enter manually';
             }
@@ -86,6 +88,7 @@ class Parser {
         $product->setCheersLink('');
         $product->setDescription($description);
         $product->setImage($image);
+        $product->setInfoComplete(($complete) ? 1:0);
 //        dump($product);
 
         if(count($descData) > 0 && count($imageData) > 0) {
