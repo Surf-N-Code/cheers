@@ -147,7 +147,7 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $form->getData();
+            $data = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());

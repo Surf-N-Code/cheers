@@ -57,7 +57,7 @@ class Product
     private $likes;
 
     /**
-     * @ORM\Column(type="boolean", length=255, nullable=false)
+     * @ORM\Column(type="boolean", length=255, nullable=true)
      */
     private $infoComplete;
 
